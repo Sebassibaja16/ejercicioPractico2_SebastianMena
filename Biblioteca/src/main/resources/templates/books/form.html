@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      th:with="pageTitle=${isEdit} ? 'Editar libro' : 'Nuevo libro'">
+    <head><title th:text="${isEdit} ? 'Editar libro' : 'Nuevo libro'">Libro</title></head>
+    <body>
+        <section th:fragment="content">
+            <form class="form"
+                  th:action="${isEdit} ? @{'/books/' + ${book.id} + '/edit'} : @{/books}"
+                  method="post" th:object="${book}">
+                <div class="form-grid">
+                    <label>Título<input type="text" th:field="*{titulo}" required></label>
+                    <label>Autor<input type="text" th:field="*{autor}" required></label>
+                    <label>ISBN<input type="text" th:field="*{isbn}"></label>
+                    <label>Fecha publicación<input type="date" th:field="*{fechaPublicacion}"></label>
+                    <label>Precio<input type="number" step="0.01" th:field="*{precio}"></label>
+                    <label>Disponible<input type="checkbox" th:field="*{disponible}"></label>
+                    <label>Categoría
+                        <select th:field="*{categoria.id}" required>
+                            <option value="">Seleccione…</option>
+                            <option th:each="c : ${allCategories}" th:value="${c.id}" th:text="${c.nombre}">Cat</option>
+                        </select>
+                    </label>
+                </div>
+                <label>Descripción<textarea rows="5" th:field="*{descripcion}"></textarea></label>
+                <div class="form-actions">
+                    <a class="btn" th:href="@{/books}">Cancelar</a>
+                    <button class="btn primary" type="submit" th:text="${isEdit} ? 'Actualizar' : 'Crear'">Crear</button>
+                </div>
+            </form>
+        </section>
+        <div th:replace="~{layout :: section(content)}"></div>
+    </body></html>

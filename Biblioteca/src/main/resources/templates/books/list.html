@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org" lang="es" th:with="pageTitle=${'Libros'}">
+    <head><title>Libros</title></head>
+    <body>
+        <section th:fragment="content">
+            <div class="actions">
+                <a class="btn primary" th:href="@{/books/new}">+ Agregar libro</a>
+                <form class="search" th:action="@{/books}" method="get">
+                    <input type="text" name="q" th:value="${q}" placeholder="Buscar…">
+                    <button class="btn" type="submit">Buscar</button>
+                </form>
+            </div>
+            <table class="table">
+                <thead><tr><th>ID</th><th>Título</th><th>Autor</th><th>Categoría</th><th>Acciones</th></tr></thead>
+                <tbody>
+                    <tr th:each="b : ${books}">
+                        <td th:text="${b.id}">1</td>
+                        <td th:text="${b.titulo}">titulo</td>
+                        <td th:text="${b.autor}">autor</td>
+                        <td th:text="${b.categoria != null ? b.categoria.nombre : '-'}">cat</td>
+                        <td>
+                            <a class="btn" th:href="@{'/books/' + ${b.id} + '/edit'}">Editar</a>
+                            <form th:action="@{'/books/' + ${b.id} + '/delete'}" method="post" th:id="${'del-'+b.id}" style="display:inline">
+                                <button class="btn danger" type="button" th:onclick="|confirmDelete('del-'+${b.id})|">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <div th:replace="~{layout :: section(content)}"></div>
+    </body></html>

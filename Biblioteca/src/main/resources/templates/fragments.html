@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fragments</title>
+    </head>
+    <body>
+
+        <!-- Encabezado -->
+        <div th:fragment="header(title)">
+            <header class="site-header">
+                <div class="container">
+                    <h1 th:text="${title}">Biblioteca</h1>
+                    <p class="subtitle">Lectura, conocimiento y comunidad</p>
+                </div>
+            </header>
+        </div>
+
+        <!-- Barra de navegación -->
+        <div th:fragment="navbar">
+            <nav class="navbar">
+                <div class="container nav-inner">
+                    <a th:href="@{/}" class="brand">Biblioteca</a>
+                    <ul class="nav-links">
+                        <li><a th:href="@{/}">Inicio</a></li>
+                        <li><a th:href="@{/books}">Libros</a></li>
+                        <li><a th:href="@{/feedback}">Sugerencias/Quejas</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Pie de página -->
+        <div th:fragment="footer">
+            <footer class="site-footer">
+                <div class="container">
+                    <p>© <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2025</span> Biblioteca</p>
+                </div>
+            </footer>
+        </div>
+
+    </body>
+</html>
